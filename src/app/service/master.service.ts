@@ -12,7 +12,7 @@ export class MasterService {
     return this.http.get(`${this.apiurl}GetAllParkingLots`);
   }
   bookSpot(obj: any) {
-    return this.http.post(`${this.apiurl}BookSpot`, obj);
+    return this.http.post(`${this.apiurl}bookSpot`, obj);
   }
   ReleaseSpot(obj: any) {
     return this.http.put(`${this.apiurl}ReleaseSpot`, obj);
