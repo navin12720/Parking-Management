@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col-10 text-center">
+        <div class="btn-group">
+            @for (item of parkingLotlist; track $index) {
+            <button type="button"
+                [ngClass]="selectedparkingLot.parkingLotId == item.parkingLotId ? 'btn-success' : 'btn-primary'"
+                class="btn" (click)="selectedParkingLot(item)">{{item.parkingLotName}}</button>
+            }
+
+
+        </div>
+    </div>
+    <div class="col-2">
+        <button type="button" class="btn btn-primary"> <i class="fa fa-plus mx-2"></i>New </button>
+    </div>
+</div>
+<div class="parking-lot pt-2">
+    @for (item of parkingSpotList; track $index) {
+    @if (checkIfParkingSpotBooked(item)!= undefined) {
+    <div class="parking-spot-booked" (click)="openReleaseModel(checkIfParkingSpotBooked(item))">
+        <div class="car">
+            <i class="fa fa-car"></i>
+
+        </div>
+        <div class="car-no">
+            <small>{{checkIfParkingSpotBooked(item).vehicleNo}}</small>
+        </div>
+
+        {{item}}
+    </div>
+    }@else {
+    <div (click)="openModel(item)" class="parking-spot">{{item}}</div>
+    }
+
+    }
+
+    <!-- Sample parking spots -->
+    <!-- 
+    <div class="parking-spot" data-bs-toggle="modal" data-bs-target="#bookModal">2</div>
+    <div class="parking-spot-booked">
+        <div class="car">
+            <i class="fa fa-car"></i>
+        </div>
+        3
+    </div>
+    <div class="parking-spot">4</div>
+    <div class="parking-spot-booked">
+        <div class="car">
+            <i class="fa fa-car"></i>
+        </div>
+        5
+    </div>
+    <div class="parking-spot">6</div>
+    <div class="parking-spot">7</div>
+    <div class="parking-spot">8</div>
+    <div class="parking-spot-booked">
+        <div class="car">
+            <i class="fa fa-car"></i>
+        </div>
+        9
+    </div>
+    <div class="parking-spot">10</div> -->
+</div>
+
+<div class="modal" id="bookModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h4 class="modal-title">In Entry</h4>
+                <button type="button" (click)="closeModel()" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="">Spot No</label>
+                        <input type="text" [(ngModel)]="bookingObj.spotNo" [value]="selectedparkingspotNumber"
+                            class="form-control" disabled>
+                    </div>
+                    <div class="col-6">
+                        <label for="">Vehicle No</label>
+                        <input type="text" [(ngModel)]="bookingObj.vehicleNo" class="form-control"
+                            placeholder="Enter Vehicle No">
+                    </div>
+                    <div class="col-6">
+                        <label for="">In-Time</label>
+                        <input type="text" [(ngModel)]="bookingObj.inTime" class="form-control"
+                            placeholder="Enter In-Time">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Mobile No</label>
+                        <input type="text" [(ngModel)]="bookingObj.mobileNo" class="form-control"
+                            placeholder="Enter Mobile">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="closeModel()" class="btn btn-danger"
+                    data-bs-dismiss="modal">Cancel</button>
+                <button type="button" (click)="Onbook()" class="btn btn-success" data-bs-dismiss="modal">Book</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="releaseBookModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h4 class="modal-title">Out Entry</h4>
+                <button type="button" class="btn-close" (click)="closeReleaseModel()" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="">Spot No</label>
+                        <input type="text" [(ngModel)]="selectedParkingObj.spotNo" [value]="selectedparkingspotNumber"
+                            class="form-control" disabled>
+                    </div>
+                    <div class="col-6">
+                        <label for="">Vehicle No</label>
+                        <input type="text" [(ngModel)]="selectedParkingObj.vehicleNo" disabled class="form-control"
+                            placeholder="Enter Vehicle No">
+                    </div>
+                    <div class="col-6">
+                        <label for="">In-Time</label>
+                        <input type="text" [(ngModel)]="selectedParkingObj.inTime" disabled class="form-control"
+                            placeholder="Enter In-Time">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Mobile No</label>
+                        <input type="text" [(ngModel)]="selectedParkingObj.mobileNo" disabled class="form-control"
+                            placeholder="Enter Mobile">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Out-Time</label>
+                        <input type="text" [(ngModel)]="selectedParkingObj.outTime" class="form-control"
+                            placeholder="Enter In-Time">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                    (click)="closeReleaseModel()">Cancel</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="releaseSpot()">Mark
+                    Out</button>
+            </div>
+        </div>
+    </div>
+</div>
